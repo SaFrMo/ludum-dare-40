@@ -3,7 +3,7 @@ import store from '@/store'
 export default class RequestResponse {
     constructor (command, path, headers, body, code, expectedFile) {
         this.command = command || 'GET'
-        this.path = path || './'
+        this.path = path || this.generateRandomPath()
         this.headers = headers || []
         this.body = body || ''
         this.id = Date.now()
@@ -35,5 +35,31 @@ export default class RequestResponse {
 
         this.validated = output ? 1 : 0
         return output
+    }
+
+    generateRandomPath () {
+        // Coin flip - will we be an existing file?
+        let existing = true
+        if (Math.random() > 0.5) {
+            existing = false
+        }
+
+        // Pick a random value from our current files
+        let output = this.randomFromArray(store.state.files)
+        if (!existing) {
+            const chars = output.split('')
+            const index1 = Math.floor(Math.random() * chars.length)
+            const index2 = Math.floor(Math.random() * chars.length)
+            let holder = chars[index1]
+            chars[index1] = chars[index2]
+            chars[index2] = holder
+            output = chars.join('')
+        }
+
+        return '/' + output
+    }
+
+    randomFromArray (arr) {
+        return arr[Math.floor(Math.random() * arr.length)]
     }
 }

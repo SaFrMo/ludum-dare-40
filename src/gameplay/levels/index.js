@@ -1,4 +1,6 @@
 import Request from '../Request'
+import allLevelOneFiles from '@/gameplay/levels/allLevelOneFiles'
+import store from '@/store'
 
 export default [
     [
@@ -39,11 +41,14 @@ export default [
                 [{
                     label: 'Tutorial',
                     value: `That's where the famous "404" error comes from - a server not being able to find a requested file! Click me for one more training round.`,
-                    stagingValue: `You've loaded up a few more files now that you're all warmed up, so see how quickly you can get ten corrent responses, starting with this one. The milliseconds are ticking by - good luck!`
+                    stagingValue: `You've loaded up a few more files now that you're all warmed up, so see how quickly you can get ten correct responses, starting with this one. The milliseconds are ticking by - good luck!`
                 }]
             ),
-            onReceived: () => {
-
+            callback: () => {
+                allLevelOneFiles.map(file => {
+                    store.commit('ADD_FILE', file)
+                })
+                store.commit('ACTIVATE_TIMER')
             }
         }
     ]

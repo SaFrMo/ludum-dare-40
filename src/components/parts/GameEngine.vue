@@ -4,6 +4,7 @@
 
 <script>
     import scriptedEvents from '@/gameplay/levels'
+    import Request from '@/gameplay/Request'
     export default {
         mounted () {
             if (this.$route.params.level === '1') {
@@ -33,8 +34,17 @@
                 // only on level 1
                 if (this.$route.params.level === '1') {
                     setTimeout(() => {
+                        if (this.currentScriptedEvents.length <= newVal) {
+                            this.$store.commit('ADD_REQUEST', new Request())
+                            return
+                        }
+
                         this.$store.commit('ADD_REQUEST', this.currentScriptedEvents[newVal].req)
-                    }, 2500)
+                        // Run any callbacks
+                        if (this.currentScriptedEvents[newVal].callback) {
+                            this.currentScriptedEvents[newVal].callback()
+                        }
+                    }, Math.random() * 2000)
                 }
             }
         }

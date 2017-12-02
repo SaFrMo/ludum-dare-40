@@ -9,7 +9,10 @@
 
         <file-browser/>
 
-        <h2 class="score">Score: {{ $store.state.score }}</h2>
+        <div class="meta">
+            <h2 class="score">Score: {{ $store.state.score }}</h2>
+            <div class="time">Time: {{ timerValue }}</div>
+        </div>
 
     </main>
 </template>
@@ -28,6 +31,13 @@
         computed: {
             currentLevelEvents () {
                 return scriptedEvents[this.$route.params.level]
+            },
+            timerValue () {
+                const rawValue = this.$store.state.timerOn
+                    ? Date.now() - this.$store.state.timerStart
+                    : this.$store.state.timerStop - this.$store.state.timerStart
+
+                return rawValue
             }
         }
     }
@@ -69,7 +79,7 @@
             padding: 20px;
         }
 
-        .score {
+        .meta {
             position: fixed;
             right: 0;
             bottom: 0;
@@ -77,6 +87,10 @@
             color: #fff;
             margin: 0;
             padding: 20px;
+
+            h2 {
+                margin-top: 0;
+            }
         }
     }
 

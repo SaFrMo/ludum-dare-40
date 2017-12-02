@@ -14,7 +14,10 @@ export default new Vuex.Store({
         tooltip: '',
         cache: [],
         output: [],
-        files
+        files,
+        timerStart: 0,
+        timerStop: 0,
+        timerOn: false
     },
     mutations: {
         'ADD_REQUEST': (state, payload) => {
@@ -57,6 +60,18 @@ export default new Vuex.Store({
         },
         'INCREMENT_TOTAL_SUBMITTED': state => {
             state.totalSubmitted++
+        },
+        'ADD_FILE': (state, payload) => {
+            state.files.push(payload)
+            state.files.sort()
+        },
+        'ACTIVATE_TIMER': state => {
+            state.timerStart = Date.now()
+            state.timerOn = true
+        },
+        'DEACTIVATE_TIMER': state => {
+            state.timerStop = Date.now()
+            state.timerOn = false
         }
     }
 })
