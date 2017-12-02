@@ -13,7 +13,7 @@ export default new Router({
             component: Welcome
         },
         {
-            path: '/level-:level',
+            path: '/level-:level/:step?',
             name: 'Board',
             component: Board
         }

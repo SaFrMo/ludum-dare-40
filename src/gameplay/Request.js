@@ -25,9 +25,10 @@ export default class RequestResponse {
         if (this.command === 'GET') {
             // if the file exists...
             if (store.state.files.find(file => `/${file}` === this.path)) {
-                // ... weshould have requested files attached
+                // ... we should have requested files attached
                 output = `/${this.files[0]}` === this.path
             } else {
+                // otherwise, there should be a 404
                 output = this.code.includes('404')
             }
         }

@@ -31,6 +31,20 @@ export default [
                 stagingValue: `My client asked for a file called "indxe.html", but that doesn't exist on your hard drive! You need to take what I ask for literally - no room for misspellings here. Click the "File doesn't exist" button, then Submit.`,
                 outputValue: ``
             }]
-        ) }
+        ) },
+        {
+            req: new Request(
+                'GET',
+                '/images/every-hilarious-cat.png',
+                [{
+                    label: 'Tutorial',
+                    value: `That's where the famous "404" error comes from - a server not being able to find a requested file! Click me for one more training round.`,
+                    stagingValue: `You've loaded up a few more files now that you're all warmed up, so see how quickly you can get ten corrent responses, starting with this one. The milliseconds are ticking by - good luck!`
+                }]
+            ),
+            onReceived: () => {
+
+            }
+        }
     ]
 ]
