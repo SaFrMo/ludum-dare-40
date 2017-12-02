@@ -1,6 +1,7 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
+import store from '@/store'
 import App from './App'
 import router from './router'
 
@@ -12,6 +13,7 @@ Vue.component('transition-fade', require('@/components/parts/TransitionFade').de
 new Vue({
     el: '#app',
     router,
+    store,
     template: '<App/>',
     components: { App }
 })
