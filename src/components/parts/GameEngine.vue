@@ -6,10 +6,12 @@
     import scriptedEvents from '@/gameplay/levels'
     export default {
         mounted () {
-            this.currentScriptedEvents.map(evt => {
-                console.log(evt.req)
-                this.$store.commit('ADD_REQUEST', evt.req)
-            })
+            setTimeout(() => {
+                this.currentScriptedEvents.map(evt => {
+                    console.log(evt.req)
+                    this.$store.commit('ADD_REQUEST', evt.req)
+                })
+            }, 1000)
         },
         props: {
             'scripted-events': { type: Object }

@@ -41,6 +41,17 @@
         .code {
             font-family: monospace;
         }
+
+        // Slide
+        .slide-in-enter {
+            transform: translateX(-100%);
+        }
+        .slide-in-leave-to {
+            transform: translateX(100%);
+        }
+        .slide-in-enter-active, .slide-in-leave-active {
+            transition: transform 0.6s;
+        }
     }
     .router-view {
         position: absolute;
