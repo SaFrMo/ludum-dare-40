@@ -30,6 +30,12 @@ export default new Vuex.Store({
                 state.requests.push(state.staging)
             }
             state.staging = payload
+        },
+        'ADD_FILE_TO_STAGING': (state, payload) => {
+            state.staging.files.push(payload)
+        },
+        'REMOVE_FILE_FROM_STAGING': (state, payload) => {
+            state.staging.files.splice(payload, 1)
         }
     }
 })

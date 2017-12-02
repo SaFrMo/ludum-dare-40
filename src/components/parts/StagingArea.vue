@@ -15,8 +15,9 @@
                     </div>
 
                     <ul class="files">
-                        <li v-for="(file, i) in staging.files" :key="file.id">
-                            {{ file }}
+                        <li class="file" v-for="(file, i) in staging.files" :key="file.id">
+                            <span class="name">{{ file }}</span>
+                            <span class="exit" @click="$store.commit('REMOVE_FILE_FROM_STAGING', i)">X</span>
                         </li>
                     </ul>
 
@@ -24,6 +25,7 @@
                         <button>File doesn't exist</button>
                         <button>File is locked</button>
                         <button @click="$store.commit('MOVE_TO_RECEIVING', staging)">Send back to queue</button>
+                        <button class="submit">Submit</button>
                     </div>
                 </div>
             </transition-fade>
@@ -87,12 +89,19 @@
             padding: 10px;
 
             display: flex;
+            flex-wrap: wrap;
             justify-content: space-between;
         }
         .controls button {
             background-color: #fff;
             font-size: 14px;
-            margin: 0 5px;
+            margin-bottom: 10px;
+            width: calc((100% / 3) - 5px);
+        }
+        .controls .submit {
+            width: 100%;
+            font-size: 24px;
+            margin-bottom: 0;
         }
     }
 

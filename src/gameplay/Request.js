@@ -5,5 +5,6 @@ export default class Request {
         this.headers = headers || []
         this.body = body || ''
         this.id = Date.now()
+        this.files = []
     }
 }
