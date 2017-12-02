@@ -10,7 +10,8 @@ export default new Vuex.Store({
         selectedItem: false,
         score: 0,
         tooltip: '',
-        cache: []
+        cache: [],
+        output: []
     },
     mutations: {
         'ADD_REQUEST': (state, payload) => {
@@ -36,6 +37,11 @@ export default new Vuex.Store({
         },
         'REMOVE_FILE_FROM_STAGING': (state, payload) => {
             state.staging.files.splice(payload, 1)
+        },
+        'MOVE_TO_OUTPUT': (state, payload) => {
+            const toMove = state.staging
+            state.staging = false
+            state.output.push(toMove)
         }
     }
 })

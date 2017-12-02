@@ -25,7 +25,7 @@
                         <button>File doesn't exist</button>
                         <button>File is locked</button>
                         <button @click="$store.commit('MOVE_TO_RECEIVING', staging)">Send back to queue</button>
-                        <button class="submit">Submit</button>
+                        <button class="submit" @click="$store.commit('MOVE_TO_OUTPUT')">Submit</button>
                     </div>
                 </div>
             </transition-fade>

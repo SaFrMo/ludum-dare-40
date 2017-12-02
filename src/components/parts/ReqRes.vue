@@ -10,7 +10,7 @@
                 </div>
             </transition-fade>
 
-            <transition name="slide-in">
+            <transition-group name="slide-in">
                 <div
                     class="single-request"
                     v-for="(request, i) in $store.state.requests"
@@ -34,21 +34,68 @@
                     </div>
 
                 </div>
-            </transition>
+            </transition-group>
         </div>
 
         <div class="output">
 
             <transition-fade>
-                <div class="instructions" v-if="!$store.state.cache.length">
+                <div class="instructions" v-if="!$store.state.output.length">
                     Drag a complete response here to send it back to the user.
                 </div>
             </transition-fade>
+
+            <transition-group name="slide-in" appear>
+                <div class="single-response"
+                    v-for="(response, i) in $store.state.output"
+                    :key="response.id"
+                    >
+                    <div class="label">
+                        Response
+                    </div>
+
+                    <div class="content">
+                        <div :class="['request-line', 'has-border']">
+                            <span class="code">{{ response.code }}</span>
+                        </div>
+
+                        <div class="fields" v-if="response.headers.length || response.files.length">
+                            <div class="headers" v-if="response.headers.length">Headers: {{ response.headers }}</div>
+                            <div class="body" v-if="response.files.length">
+                                <span>Files:</span>
+                                <ul>
+                                    <li v-for="(file, i) in response.files" :key="i">
+                                        {{ file }}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="validation-wrap">
+                        <div class="validation" v-html="getValidation(response)"></div>
+                    </div>
+
+                </div>
+            </transition-group>
 
         </div>
     </section>
 
 </template>
+
+<script>
+    import fail from '@/assets/thumb-down.svg'
+    import succeed from '@/assets/thumb-up.svg'
+
+    export default {
+        methods: {
+            getValidation (response) {
+                return succeed || fail
+            }
+        }
+    }
+</script>
 
 <style lang="scss">
 
@@ -63,6 +110,8 @@
             background-color: darken($left-bg, 15%);
             overflow-x: hidden;
         }
+
+        // Request
         .single-request {
             background-color: darken($left-bg, 25%);
             box-sizing: border-box;
@@ -75,24 +124,25 @@
             display: flex;
             justify-content: space-between;
             flex-direction: column;
-        }
-        .single-request .label {
-            text-align: right;
-            text-transform: uppercase;
-            font-size: 14px;
-            background-color: #fff;
-            color: #000;
-            display: inline-block;
-            padding: 0 5px;
 
-            transition: background-color 0.4s;
-        }
-        .single-request:hover .label,
-        .single-request:focus .label {
-            background-color: #ddd;
-        }
-        .single-request .content {
-            padding: 5px 10px 10px;
+            .label {
+                text-align: right;
+                text-transform: uppercase;
+                font-size: 14px;
+                background-color: #fff;
+                color: #000;
+                display: inline-block;
+                padding: 0 5px;
+
+                transition: background-color 0.4s;
+            }
+            &:hover .label,
+            &:focus .label {
+                background-color: #ddd;
+            }
+            .content {
+                padding: 5px 10px 10px;
+            }
         }
         .request-line {
             padding: 5px;
@@ -118,6 +168,40 @@
             padding: 10px 5px;
             text-align: left;
         }
+
+        // Response
+        .single-response {
+            @extend .single-request;
+            .label {
+                text-align: left;
+            }
+            ul {
+                margin: 5px auto 0;
+            }
+            .validation-wrap {
+                display: flex;
+                justify-content: flex-end;
+            }
+            .validation {
+                width: 75px;
+                height: 75px;
+                background-color: rgba(0, 0, 0, 0.4);
+                margin: 0 10px 10px;
+                position: relative;
+            }
+            .validation svg {
+                width: 100%;
+                height: auto;
+                margin: auto;
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+            }
+        }
+
+        // Output
         .output {
             margin-top: 20px;
         }
