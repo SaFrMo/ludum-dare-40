@@ -6,7 +6,7 @@
 
             <transition-fade>
                 <div class="instructions" v-if="!$store.state.requests.length">
-                    Incoming requests will appear here.
+                    Incoming requests will appear here. Wait for more to arrive.
                 </div>
             </transition-fade>
 
@@ -28,7 +28,15 @@
                         </div>
 
                         <div class="fields" v-if="request.headers.length || request.body">
-                            <div class="headers" v-if="request.headers.length">Headers: {{ request.headers }}</div>
+                            <div class="headers" v-if="request.headers.length">
+                                <span>Headers:</span>
+                                <ul>
+                                    <li v-for="(header, i) in request.headers" :key="header">
+                                        <h2>{{ header.label }}</h2>
+                                        <div>{{ header.value }}</div>
+                                    </li>
+                                </ul>
+                            </div>
                             <div class="body" v-if="request.body">Body: {{ request.body }}</div>
                         </div>
                     </div>
@@ -40,8 +48,8 @@
         <div class="output">
 
             <transition-fade>
-                <div class="instructions" v-if="!$store.state.output.length">
-                    Drag a complete response here to send it back to the user.
+                <div class="instructions" v-if="!$store.state.output.length && $store.state.staging">
+                    Click 'Submit' when your response is ready.
                 </div>
             </transition-fade>
 
@@ -132,7 +140,7 @@
                 background-color: #fff;
                 color: #000;
                 display: inline-block;
-                padding: 0 5px;
+                padding: 0 10px;
 
                 transition: background-color 0.4s;
             }
@@ -167,6 +175,11 @@
         .fields {
             padding: 10px 5px;
             text-align: left;
+        }
+        .headers h2 {
+            font-size: 18px;
+            font-family: monospace;
+            margin: 5px auto;
         }
 
         // Response
