@@ -3,7 +3,7 @@
         <li v-for="file in tree">
             <div
                 v-if="typeof file === 'string'"
-                @click="$store.commit('ADD_FILE_TO_STAGING', file)">
+                @click="$store.commit('SET_RESPONSE_CODE', '200 OK'); $store.commit('ADD_FILE_TO_STAGING', file)">
                 {{ file }}
             </div>
             <div v-else>

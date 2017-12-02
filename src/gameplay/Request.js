@@ -12,4 +12,14 @@ export default class RequestResponse {
         this.expectedFile = expectedFile || this.path.match(/[^/]*$/)[0]
         // this.expectedResponse = new Response(code || 200, this.expectedFile)
     }
+
+    validate () {
+        // Handle GET validation
+        if (this.command === 'GET') {
+            // should have requested files attached
+            return `/${this.files[0]}` === this.path
+        }
+
+        return false
+    }
 }

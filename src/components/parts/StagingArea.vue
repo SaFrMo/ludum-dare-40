@@ -30,29 +30,29 @@
 
                         <div class="code-wrap">
                             <h3>Code</h3>
-                            <span>200 OK</span>
+                            <span>{{ staging.code }}</span>
                         </div>
 
                         <div class="files-wrap" v-if="staging.files.length">
-                            <h3>Files</h3>
+                            <h3>Files Attached</h3>
                             <ul class="files">
-                                <li class="file" v-for="(file, i) in staging.files" :key="file.id">
+                                <li class="file" v-for="(file, i) in staging.files" :key="i">
                                     <span class="name">{{ file }}</span>
                                     <span class="exit" @click="$store.commit('REMOVE_FILE_FROM_STAGING', i)">X</span>
                                 </li>
                             </ul>
                         </div>
                         <div v-else class="instructions">
-                            Click on files in the hard drive to add them to your response.
+                            <!-- Click on files in the hard drive to add them to your response. -->
                         </div>
 
                     </div>
 
                     <div class="controls">
-                        <button>File doesn't exist</button>
+                        <button @click="staging.files = []; $store.commit('SET_RESPONSE_CODE', '404 Not Found')">File doesn't exist</button>
                         <button>File is locked</button>
                         <button @click="$store.commit('MOVE_TO_RECEIVING', staging)">Send back to queue</button>
-                        <button class="submit" @click="$store.commit('MOVE_TO_OUTPUT')">Submit</button>
+                        <button class="submit" @click="submit">Submit</button>
                     </div>
                 </div>
             </transition-fade>
@@ -71,6 +71,14 @@
         computed: {
             staging () {
                 return this.$store.state.staging
+            }
+        },
+        methods: {
+            submit () {
+                this.$store.commit('MOVE_TO_OUTPUT')
+                setTimeout(() => {
+                    this.$store.commit('REMOVE_OLDEST_OUTPUT')
+                }, 3000)
             }
         }
     }
@@ -108,9 +116,8 @@
         .label {
             background-color: #fff;
             display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: flex-start;
+            justify-content: space-between;
+            align-items: center;
             padding: 10px;
         }
         .label .code {
@@ -158,12 +165,28 @@
                 margin: 0 0 10px;
             }
             .files {
+                margin-top: 3px;
                 display: flex;
-                justify-content: flex-end;
+                align-items: flex-end;
+                flex-direction: column;
             }
             .file {
                 display: flex;
                 justify-content: space-between;
+                align-items: flex-end;
+                margin-bottom: 10px;
+            }
+            .file .exit {
+                background-color: rgba(0, 0, 0, 0.4);
+                padding: 0 5px;
+                margin-left: 10px;
+                transition: background-color 0.4s, color 0.4s;
+                cursor: pointer;
+
+                &:hover, &:focus {
+                    background-color: #fff;
+                    color: #000;
+                }
             }
         }
         .controls {
@@ -178,6 +201,13 @@
             font-size: 14px;
             margin-bottom: 10px;
             width: calc((100% / 3) - 5px);
+            transition: color 0.4s, background-color 0.4s;
+            cursor: pointer;
+
+            &:hover, &:focus {
+                background-color: #000;
+                color: #fff;
+            }
         }
         .controls .submit {
             width: 100%;

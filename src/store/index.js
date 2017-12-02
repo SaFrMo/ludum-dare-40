@@ -42,6 +42,12 @@ export default new Vuex.Store({
             const toMove = state.staging
             state.staging = false
             state.output.push(toMove)
+        },
+        'REMOVE_OLDEST_OUTPUT': (state, payload) => {
+            state.output.shift()
+        },
+        'SET_RESPONSE_CODE': (state, newCode) => {
+            state.staging.code = newCode
         }
     }
 })

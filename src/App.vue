@@ -49,13 +49,16 @@
         }
 
         // Slide
-        .slide-in-enter {
+        .slide-in-enter,
+        .slide-in-right-leave-to {
             transform: translateX(-100%);
         }
-        .slide-in-leave-to {
+        .slide-in-leave-to,
+        .slide-in-right-enter {
             transform: translateX(100%);
         }
-        .slide-in-enter-active, .slide-in-leave-active {
+        .slide-in-enter-active, .slide-in-leave-active,
+        .slide-in-right-enter-active, .slide-in-right-leave-active {
             transition: transform 0.6s;
         }
     }

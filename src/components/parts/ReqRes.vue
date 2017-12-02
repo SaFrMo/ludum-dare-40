@@ -53,7 +53,7 @@
                 </div>
             </transition-fade>
 
-            <transition-group name="slide-in" appear>
+            <transition-group name="slide-in-right" appear>
                 <div class="single-response"
                     v-for="(response, i) in $store.state.output"
                     :key="response.id"
@@ -68,7 +68,7 @@
                         </div>
 
                         <div class="fields" v-if="response.headers.length || response.files.length">
-                            <div class="headers" v-if="response.headers.length">Headers: {{ response.headers }}</div>
+                            <!-- <div class="headers" v-if="response.headers.length">Headers: {{ response.headers }}</div> -->
                             <div class="body" v-if="response.files.length">
                                 <span>Files:</span>
                                 <ul>
@@ -99,7 +99,7 @@
     export default {
         methods: {
             getValidation (response) {
-                return succeed || fail
+                return response.validate() ? succeed : fail
             }
         }
     }
@@ -185,9 +185,6 @@
         // Response
         .single-response {
             @extend .single-request;
-            .label {
-                text-align: left;
-            }
             ul {
                 margin: 5px auto 0;
             }
