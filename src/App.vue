@@ -12,7 +12,7 @@
     }
 </script>
 
-<style>
+<style lang="scss">
     #app {
         font-family: 'Avenir', Helvetica, Arial, sans-serif;
         -webkit-font-smoothing: antialiased;
@@ -30,6 +30,17 @@
         display: flex;
         align-items: center;
         justify-content: center;
+
+        button {
+            appearance: none;
+            border-radius: 0;
+            border: none;
+            outline-color: transparent;
+            background-color: transparent;
+        }
+        .code {
+            font-family: monospace;
+        }
     }
     .router-view {
         position: absolute;

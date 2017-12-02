@@ -43,6 +43,8 @@
         & > section {
             height: 100%;
             width: calc(100% / 3);
+            padding: 20px;
+            box-sizing: border-box;
 
             display: flex;
             flex-direction: column;

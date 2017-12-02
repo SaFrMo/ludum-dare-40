@@ -13,6 +13,9 @@ export default new Vuex.Store({
     mutations: {
         'ADD_REQUEST': (state, payload) => {
             state.requests.push(payload)
+        },
+        'SET_SELECTED': (state, payload) => {
+            state.selectedItem = payload || false
         }
     }
 })
