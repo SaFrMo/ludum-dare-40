@@ -6,10 +6,12 @@ import router from './router'
 
 Vue.config.productionTip = false
 
+Vue.component('transition-fade', require('@/components/parts/TransitionFade').default)
+
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
-  router,
-  template: '<App/>',
-  components: { App }
+    el: '#app',
+    router,
+    template: '<App/>',
+    components: { App }
 })
