@@ -14,7 +14,7 @@
                 <div
                     class="single-request"
                     v-for="(request, i) in $store.state.requests"
-                    :key="request.id"
+                    :key="i"
                     @click="$store.commit('MOVE_TO_STAGING', request)">
 
                     <div class="label">
@@ -29,9 +29,9 @@
 
                         <div class="fields" v-if="request.headers.length || request.body">
                             <div class="headers" v-if="request.headers.length">
-                                <span>Headers:</span>
+                                <!-- <span>Headers:</span> -->
                                 <ul>
-                                    <li v-for="(header, i) in request.headers" :key="header">
+                                    <li v-for="(header, i) in request.headers" :key="i">
                                         <h2>{{ header.label }}</h2>
                                         <div>{{ header.value }}</div>
                                     </li>
@@ -99,7 +99,15 @@
     export default {
         methods: {
             getValidation (response) {
-                return response.validate() ? succeed : fail
+                if (response.validated === -1) {
+                    response.validate()
+                    if (response.validated > 0) {
+                        this.$store.commit('CHANGE_SCORE_BY', 1)
+                    }
+                    this.$store.commit('INCREMENT_TOTAL_SUBMITTED')
+                }
+
+                return response.validated > 0 ? succeed : fail
             }
         }
     }

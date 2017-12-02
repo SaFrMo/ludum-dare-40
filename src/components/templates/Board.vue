@@ -9,6 +9,8 @@
 
         <file-browser/>
 
+        <h2 class="score">Score: {{ $store.state.score }}</h2>
+
     </main>
 </template>
 
@@ -64,6 +66,16 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 20px;
+        }
+
+        .score {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.4);
+            color: #fff;
+            margin: 0;
             padding: 20px;
         }
     }

@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import files from '@/gameplay/files'
 
 Vue.use(Vuex)
 
@@ -9,9 +10,11 @@ export default new Vuex.Store({
         staging: false,
         selectedItem: false,
         score: 0,
+        totalSubmitted: 0,
         tooltip: '',
         cache: [],
-        output: []
+        output: [],
+        files
     },
     mutations: {
         'ADD_REQUEST': (state, payload) => {
@@ -48,6 +51,12 @@ export default new Vuex.Store({
         },
         'SET_RESPONSE_CODE': (state, newCode) => {
             state.staging.code = newCode
+        },
+        'CHANGE_SCORE_BY': (state, delta) => {
+            state.score += delta
+        },
+        'INCREMENT_TOTAL_SUBMITTED': state => {
+            state.totalSubmitted++
         }
     }
 })

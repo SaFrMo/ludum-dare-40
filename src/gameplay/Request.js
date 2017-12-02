@@ -1,3 +1,5 @@
+import store from '@/store'
+
 export default class RequestResponse {
     constructor (command, path, headers, body, code, expectedFile) {
         this.command = command || 'GET'
@@ -11,15 +13,26 @@ export default class RequestResponse {
         this.code = code || '200 OK'
         this.expectedFile = expectedFile || this.path.match(/[^/]*$/)[0]
         // this.expectedResponse = new Response(code || 200, this.expectedFile)
+
+        // -1: not validated, 0: fail, 1: success
+        this.validated = -1
     }
 
     validate () {
+        let output = false
+
         // Handle GET validation
         if (this.command === 'GET') {
-            // should have requested files attached
-            return `/${this.files[0]}` === this.path
+            // if the file exists...
+            if (store.state.files.find(file => `/${file}` === this.path)) {
+                // ... weshould have requested files attached
+                output = `/${this.files[0]}` === this.path
+            } else {
+                output = this.code.includes('404')
+            }
         }
 
-        return false
+        this.validated = output ? 1 : 0
+        return output
     }
 }
