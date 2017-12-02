@@ -1,10 +1,22 @@
 <template>
 
     <section class="file-browser">
-        File Browser
+        <file-directory :tree="files"/>
     </section>
 
 </template>
+
+<script>
+    import files from '@/gameplay/files'
+
+    export default {
+        data () {
+            return {
+                files
+            }
+        }
+    }
+</script>
 
 <style lang="scss">
 

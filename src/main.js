@@ -8,6 +8,7 @@ import router from './router'
 Vue.config.productionTip = false
 
 Vue.component('transition-fade', require('@/components/parts/TransitionFade').default)
+Vue.component('file-directory', require('@/components/parts/Directory').default)
 
 /* eslint-disable no-new */
 new Vue({

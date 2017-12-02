@@ -32,6 +32,7 @@
         justify-content: center;
 
         button {
+            font-family: 'Avenir', Helvetica, Arial, sans-serif;
             appearance: none;
             border-radius: 0;
             border: none;

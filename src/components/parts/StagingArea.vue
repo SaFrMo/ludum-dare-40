@@ -14,10 +14,16 @@
                         <span class="path">{{ staging.path }}</span>
                     </div>
 
+                    <ul class="files">
+                        <li v-for="(file, i) in staging.files" :key="file.id">
+                            {{ file }}
+                        </li>
+                    </ul>
+
                     <div class="controls">
                         <button>File doesn't exist</button>
                         <button>File is locked</button>
-                        <button>Send back to queue</button>
+                        <button @click="$store.commit('MOVE_TO_RECEIVING', staging)">Send back to queue</button>
                     </div>
                 </div>
             </transition-fade>
@@ -82,6 +88,11 @@
 
             display: flex;
             justify-content: space-between;
+        }
+        .controls button {
+            background-color: #fff;
+            font-size: 14px;
+            margin: 0 5px;
         }
     }
 
