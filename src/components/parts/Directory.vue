@@ -106,9 +106,11 @@
         }
         .authentication {
             margin: 10px;
-            background-color: rgba(0, 0, 0, 0.4);
+            background-color: rgba(0, 0, 0, 0.55);
             padding: 5px;
             color: #0c0;
+            font-size: 16px;
+            font-family: monospace;
 
             display: flex;
             justify-content: space-between;

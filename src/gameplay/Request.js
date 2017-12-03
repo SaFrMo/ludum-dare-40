@@ -27,9 +27,15 @@ export default class RequestResponse {
     validate () {
         let output = false
 
-        const is404 = !store.state.files.find(file => `/${file}` === this.path)
+        const fileInStore = store.state.files.find(file => `/${file}` === this.path || this.path === `/${file.name}`)
+        const is404 = !fileInStore
+        const authHeader = this.headers.find(x => x.label === 'Authorization')
+        const is403 = !is404 && fileInStore.hasOwnProperty('auth') && ((authHeader && authHeader.value !== fileInStore.auth) || !authHeader)
+
         if (is404) {
             output = this.code.includes('404')
+        } else if (is403) {
+            output = this.code.includes('403')
         } else if (this.command === 'GET') {
             // GET: we should have requested files attached
             output = `/${this.files[0]}` === this.path
@@ -52,6 +58,9 @@ export default class RequestResponse {
 
         // Pick a random value from our current files
         let output = this.randomFromArray(store.state.files)
+        if (typeof output !== 'string') {
+            output = output.name
+        }
         if (!existing) {
             const chars = output.split('')
             const index1 = Math.floor(Math.random() * chars.length)

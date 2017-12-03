@@ -23,7 +23,7 @@ export default {
             [{
                 label: 'POST-Tutorial',
                 value: `GET is great, but it doesn't cover everything a user can do online. Let's learn about a new HTTP method!`,
-                stagingValue: `POST does just what it sounds like - it posts new content to the given address. The new content is contained in the Request Body below.<br/><br/>Find the requested file just like you've been doing, but this time, click the "Post Data" button instead of "Add to Response." Then click "Submit" when you're done.<br/><br/>Note that you don't need to include a full file in a POST response - just a heads-up that the POST worked successfully!`,
+                stagingValue: `POST does just what it sounds like - it posts new content. The new content is contained in the Request Body below.<br/><br/>Find the requested file just like you've been doing, but this time, click the "Post Data" button instead of "Add to Response." Then click "Submit" when you're done.<br/><br/>Note that you don't need to include a full file in a POST response - just a heads-up that the POST worked successfully!`,
                 outputValue: ``
             }],
             'The Post Dangerous Game<br/><br/>It was a dark and stormy night...'
@@ -66,13 +66,13 @@ export default {
             [{
                 label: 'AUTH-Tutorial',
                 value: `Not just anyone can POST anywhere, though. Some files require special authorization.`,
-                stagingValue: `The Authorization header contains two fields: the authorization type (in this case, Basic), then the credentials (usually a password or cookie) come after a space.<br/><br/>This authorization doesn't match the required value for vault/money.html, so let's return a new response: 403 Forbidden.`,
+                stagingValue: `The Authorization below contains two fields: first, the authorization type (in this case, Basic), then the credentials (usually a password or cookie), which come after a space.<br/><br/>If any request doesn't match the desired file's password, we'll need to return a new response: 403 Forbidden.`,
                 outputValue: ``
             }, {
                 label: 'Authorization',
                 value: 'Basic password123'
             }],
-            `send all money to rob-banks-the-bank-robber@criminal.com please. thank you`
+            `send all money to rob-banks-the-bank-robber@criminal.io please. thank you`
         ),
             callback: () => {
                 authPages.map(page => store.commit('ADD_FILE', { name: page, auth: 'Basic 5up3r5tr0ngp4ssw0rd' }))

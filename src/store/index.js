@@ -47,7 +47,8 @@ export default new Vuex.Store({
             state.staging.files.splice(payload, 1)
         },
         'POST_DATA': (state, payload) => {
-            state.staging.responseBody.push(`Data posted to <code>/${payload}</code>.`)
+            const path = typeof payload === 'string' ? payload : payload.name
+            state.staging.responseBody.push(`Data posted to <code>/${path}</code>.`)
         },
         'UNDO_POST_DATA': (state, payload) => {
             state.staging.responseBody.splice(payload, 1)

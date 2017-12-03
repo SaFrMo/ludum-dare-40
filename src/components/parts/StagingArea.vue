@@ -19,7 +19,10 @@
                         <ul>
                             <li v-for="(header, i) in $store.state.staging.headers" :key="i">
                                 <h2>{{ header.label }}</h2>
-                                <div v-html="header.stagingValue || header.value"></div>
+                                <div :class="['value-wrap', { 'is-auth-header': header.label === 'Authorization' }]">
+                                    <div class="key-svg" v-if="header.label === 'Authorization'" v-html="keySvg"></div>
+                                    <div v-html="header.stagingValue || header.value"></div>
+                                </div>
                             </li>
                         </ul>
                     </div>
@@ -83,7 +86,13 @@
 </template>
 
 <script>
+    import keySvg from '@/assets/key.svg'
     export default {
+        data () {
+            return {
+                keySvg
+            }
+        },
         computed: {
             staging () {
                 return this.$store.state.staging
@@ -149,6 +158,25 @@
             font-size: 18px;
             font-family: monospace;
             margin: 5px auto;
+        }
+        .request-headers .is-auth-header.value-wrap {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px;
+            background-color: rgba(0, 0, 0, 0.7);
+            align-items: flex-end;
+            color: #0c0;
+            font-size: 16px;
+            font-family: monospace;
+
+            .key-svg {
+                display: flex;
+                align-items: center;
+            }
+            svg {
+                width: 32px;
+                height: 32px;
+            }
         }
         .request-body {
             text-align: left;
