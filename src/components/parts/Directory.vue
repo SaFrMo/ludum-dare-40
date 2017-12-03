@@ -1,10 +1,12 @@
 <template>
     <ul class="directory">
-        <li v-for="file in tree.files">
-            <div
-                v-if="typeof file === 'string'"
-                @click="$store.commit('SET_RESPONSE_CODE', '200 OK'); $store.commit('ADD_FILE_TO_STAGING', file)">
-                {{ file }}
+        <li v-for="file in tree">
+            <div class="file-wrapper" v-if="typeof file === 'string'">
+                <span class="filename" v-html="file"></span>
+                <div class="file-controls-wrap">
+                    <button @click="$store.commit('SET_RESPONSE_CODE', '200 OK'); $store.commit('ADD_FILE_TO_STAGING', file)">Add to Response</button>
+                    <button v-if="$route.params.level > 1" @click="$store.commit('SET_RESPONSE_CODE', '200 OK'); ">Post Data</button>
+                </div>
             </div>
             <div v-else>
                 <span>{{ file.name }}</span>
@@ -18,7 +20,7 @@
     export default {
         props: {
             tree: {
-                type: Object,
+                type: [Object, Array],
                 default: () => {}
             }
         },
@@ -37,3 +39,45 @@
         }
     }
 </script>
+
+<style lang="scss">
+
+    .directory {
+        list-style-type: none;
+        padding: 0;
+        text-align: left;
+
+
+        .file-wrapper {
+            background-color: rgba(0, 0, 0, 0.4);
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+        .filename {
+            display: block;
+            background-color: #fff;
+            padding: 5px;
+            font-size: 18px;
+        }
+        .file-controls-wrap {
+            text-align: right;
+            margin-bottom: 10px;
+        }
+        .file-controls-wrap button {
+            font-size: 16px;
+            background-color: #fff !important;
+            margin: 0 5px;
+            transition: color 0.4s, background-color 0.4s;
+            cursor: pointer;
+
+            &:hover, &:focus {
+                background-color: #000 !important;
+                color: #fff;
+            }
+        }
+        .file-controls-wrap button:last-child {
+            margin: 0;
+        }
+    }
+
+</style>

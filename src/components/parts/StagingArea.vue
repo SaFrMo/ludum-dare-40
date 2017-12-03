@@ -34,7 +34,7 @@
                         </div>
 
                         <div class="files-wrap" v-if="staging.files.length">
-                            <h3>Files Attached</h3>
+                            <h3>Body</h3>
                             <ul class="files">
                                 <li class="file" v-for="(file, i) in staging.files" :key="i">
                                     <span class="name">{{ file }}</span>

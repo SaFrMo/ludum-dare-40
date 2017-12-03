@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import files from '@/gameplay/files'
 
 Vue.use(Vuex)
 
@@ -14,7 +13,7 @@ export default new Vuex.Store({
         tooltip: '',
         cache: [],
         output: [],
-        files,
+        files: [],
         timerStart: 0,
         timerStop: 0,
         timerOn: false,
@@ -78,6 +77,7 @@ export default new Vuex.Store({
             state.message = payload
         },
         'RESET_BOARD': state => {
+            state.files = []
             state.requests = []
             state.staging = false
             state.output = []
