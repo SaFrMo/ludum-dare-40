@@ -2,7 +2,12 @@ import store from '@/store'
 
 export default class RequestResponse {
     constructor (command, path, headers, body, code, expectedFile) {
-        this.command = command || 'GET'
+        let newCommand = command || ['GET', 'POST']
+        if (Array.isArray(newCommand)) {
+            newCommand = this.randomFromArray(newCommand)
+        }
+
+        this.command = newCommand
         this.path = path || this.generateRandomPath()
         this.headers = headers || []
         this.body = body || ''
@@ -12,6 +17,7 @@ export default class RequestResponse {
         // Response data
         this.code = code || '200 OK'
         this.expectedFile = expectedFile || this.path.match(/[^/]*$/)[0]
+        this.responseBody = []
         // this.expectedResponse = new Response(code || 200, this.expectedFile)
 
         // -1: not validated, 0: fail, 1: success
@@ -21,16 +27,16 @@ export default class RequestResponse {
     validate () {
         let output = false
 
-        // Handle GET validation
-        if (this.command === 'GET') {
-            // if the file exists...
-            if (store.state.files.find(file => `/${file}` === this.path)) {
-                // ... we should have requested files attached
-                output = `/${this.files[0]}` === this.path
-            } else {
-                // otherwise, there should be a 404
-                output = this.code.includes('404')
-            }
+        const is404 = !store.state.files.find(file => `/${file}` === this.path)
+        if (is404) {
+            output = this.code.includes('404')
+        } else if (this.command === 'GET') {
+            // GET: we should have requested files attached
+            output = `/${this.files[0]}` === this.path
+        } else if (this.command === 'POST') {
+            // Handle POST validation
+            output = this.responseBody.find(x => x.includes(`Data posted to <code>${this.path}</code>.`)) &&
+                this.files.length === 0
         }
 
         this.validated = output ? 1 : 0

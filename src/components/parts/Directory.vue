@@ -4,8 +4,8 @@
             <div class="file-wrapper" v-if="typeof file === 'string'">
                 <span class="filename" v-html="file"></span>
                 <div class="file-controls-wrap">
-                    <button @click="$store.commit('SET_RESPONSE_CODE', '200 OK'); $store.commit('ADD_FILE_TO_STAGING', file)">Add to Response</button>
-                    <button v-if="$route.params.level > 1" @click="$store.commit('SET_RESPONSE_CODE', '200 OK'); ">Post Data</button>
+                    <button @click="addFile(file)">Add to Response</button>
+                    <button v-if="$route.params.level > 1" @click="postData(file)">Post Data</button>
                 </div>
             </div>
             <div v-else>
@@ -22,6 +22,16 @@
             tree: {
                 type: [Object, Array],
                 default: () => {}
+            }
+        },
+        methods: {
+            addFile (file) {
+                this.$store.commit('SET_RESPONSE_CODE', '200 OK')
+                this.$store.commit('ADD_FILE_TO_STAGING', file)
+            },
+            postData (file) {
+                this.$store.commit('SET_RESPONSE_CODE', '200 OK')
+                this.$store.commit('POST_DATA', file)
             }
         },
         computed: {

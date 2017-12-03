@@ -38,12 +38,22 @@ export default new Vuex.Store({
             }
             state.staging = payload
         },
+
+        // HTTP methods
         'ADD_FILE_TO_STAGING': (state, payload) => {
             state.staging.files.push(payload)
         },
         'REMOVE_FILE_FROM_STAGING': (state, payload) => {
             state.staging.files.splice(payload, 1)
         },
+        'POST_DATA': (state, payload) => {
+            state.staging.responseBody.push(`Data posted to <code>/${payload}</code>.`)
+        },
+        'UNDO_POST_DATA': (state, payload) => {
+            state.staging.responseBody.splice(payload, 1)
+        },
+
+        // Move requests/responses
         'MOVE_TO_OUTPUT': (state, payload) => {
             const toMove = state.staging
             state.staging = false

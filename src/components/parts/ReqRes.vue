@@ -37,7 +37,7 @@
                                     </li>
                                 </ul>
                             </div>
-                            <div class="body" v-if="request.body">Body: {{ request.body }}</div>
+                            <!-- <div class="body" v-if="request.body">Body: {{ request.body }}</div> -->
                         </div>
                     </div>
 

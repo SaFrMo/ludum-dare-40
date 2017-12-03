@@ -50,11 +50,17 @@
         },
         watch: {
             totalSubmitted (newVal) {
-                // only on level 1
-                // if (this.$route.params.level === '1') {
                 setTimeout(() => {
                     if (this.currentScriptedEvents.length <= newVal) {
-                        this.$store.commit('ADD_REQUEST', new Request())
+                        let restrictCommands = false
+                        const level = this.$route.params.level
+                        if (level === 1) {
+                            restrictCommands = 'GET'
+                        } else if (level === 2) {
+                            restrictCommands = ['GET', 'POST']
+                        }
+
+                        this.$store.commit('ADD_REQUEST', new Request(restrictCommands))
                         return
                     }
 
@@ -64,7 +70,6 @@
                         this.currentScriptedEvents[newVal].callback()
                     }
                 }, Math.random() * 2000)
-                // }
             },
             '$store.state.score' (newVal) {
                 // only on level 1

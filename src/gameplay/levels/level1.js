@@ -31,7 +31,7 @@ export default {
             [{
                 label: 'Tutorial',
                 value: `Look at all those happy users! Sometimes, though, you'll have to be the bearer of bad news. Click me to start your next response.`,
-                stagingValue: `My client asked for a file called "indxe.html", but that doesn't exist on your hard drive! You need to take what I ask for literally - no room for misspellings here. Click the "File doesn't exist" button, then Submit.`,
+                stagingValue: `My client asked for a file called "indxe.html", but that doesn't exist on your hard drive! You need to take what I ask for literally - no room for misspellings here. Click the "404" button, then Submit.`,
                 outputValue: ``
             }]
         ) },

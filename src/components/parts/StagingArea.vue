@@ -24,6 +24,11 @@
                         </ul>
                     </div>
 
+                    <div class="request-body" v-if="$store.state.staging.body">
+                        <span class="body-label">Request Body:</span>
+                        <div class="body-content" v-html="$store.state.staging.body"></div>
+                    </div>
+
                     <div class="response-building">
 
                         <h2>Response</h2>
@@ -33,8 +38,19 @@
                             <span>{{ staging.code }}</span>
                         </div>
 
+                        <h3 class="response-body-label" v-if="staging.files.length || staging.responseBody.length">Body</h3>
+                        <div class="response-body-wrap" v-if="staging.responseBody.length">
+                            <h4>Meta</h4>
+                            <ul class="lines">
+                                <li class="line" v-for="(line, i) in staging.responseBody" :key="i">
+                                    <span class="name" v-html="line"></span>
+                                    <span class="exit" @click="$store.commit('UNDO_POST_DATA', i)">X</span>
+                                </li>
+                            </ul>
+                        </div>
+
                         <div class="files-wrap" v-if="staging.files.length">
-                            <h3>Body</h3>
+                            <h4>Files</h4>
                             <ul class="files">
                                 <li class="file" v-for="(file, i) in staging.files" :key="i">
                                     <span class="name">{{ file }}</span>
@@ -42,15 +58,12 @@
                                 </li>
                             </ul>
                         </div>
-                        <div v-else class="instructions">
-                            <!-- Click on files in the hard drive to add them to your response. -->
-                        </div>
 
                     </div>
 
                     <div class="controls">
-                        <button @click="staging.files = []; $store.commit('SET_RESPONSE_CODE', '404 Not Found')">File doesn't exist</button>
-                        <button>File is locked</button>
+                        <button @click="staging.files = []; $store.commit('SET_RESPONSE_CODE', '404 Not Found')">404</button>
+                        <!-- <button>File is locked</button> -->
                         <button @click="$store.commit('MOVE_TO_RECEIVING', staging)">Send back to queue</button>
                         <button class="submit" @click="submit">Submit</button>
                     </div>
@@ -134,6 +147,21 @@
             font-family: monospace;
             margin: 5px auto;
         }
+        .request-body {
+            text-align: left;
+            margin: 10px;
+        }
+        .request-body .body-label {
+            margin-bottom: 10px;
+            display: block;
+        }
+        .request-body .body-content {
+            background-color: #000;
+            color: #fff;
+            font-family: monospace;
+            padding: 10px;
+            font-size: 16px;
+        }
         .response-building {
             background-color: rgba(0, 0, 0, 0.4);
             margin: 20px 10px;
@@ -145,7 +173,10 @@
             flex: 1;
 
             h2 {
-                margin: 10px auto;
+                margin: 0 auto 5px;
+            }
+            h4 {
+                margin: 0 auto 10px;
             }
             .code-wrap {
                 display: flex;
@@ -156,28 +187,40 @@
                 margin: 0;
             }
         }
-        .files-wrap {
+        .files-wrap,
+        .response-body-wrap {
             padding: 0 0 10px;
-            display: flex;
-            justify-content: space-between;
 
             h3 {
                 text-align: left;
                 margin: 0 0 10px;
             }
-            .files {
+            .files,
+            .lines {
                 margin-top: 3px;
+                padding: 0;
                 display: flex;
                 align-items: flex-end;
                 flex-direction: column;
             }
-            .file {
+            .file,
+            .line {
+                width: 100%;
                 display: flex;
                 justify-content: space-between;
                 align-items: flex-end;
                 margin-bottom: 10px;
+                text-align: left;
             }
-            .file .exit {
+            .file code,
+            .line code {
+                background-color: #000;
+                padding: 0 5px;
+                font-size: 16px;
+                // color: #0c0;
+            }
+            .file .exit,
+            .line .exit {
                 background-color: rgba(0, 0, 0, 0.4);
                 padding: 0 5px;
                 margin-left: 10px;
@@ -189,6 +232,10 @@
                     color: #000;
                 }
             }
+        }
+        .response-body-label {
+            text-align: left;
+            margin: 5px 0;
         }
         .controls {
             padding: 10px;
@@ -213,7 +260,6 @@
         .controls .submit {
             width: 100%;
             font-size: 24px;
-            margin-bottom: 0;
         }
     }
 
