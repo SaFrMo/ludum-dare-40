@@ -4,8 +4,8 @@
             <div class="file-wrapper" v-if="typeof file === 'string' || file.auth">
                 <span class="filename" v-html="getFile(file)"></span>
                 <div class="file-controls-wrap">
-                    <button @click="addFile(file)">Add to Response</button>
-                    <button v-if="$route.params.level > 1" @click="postData(file)">Post Data</button>
+                    <button @click="addFile(file)">GET</button>
+                    <button v-if="$route.params.level > 1" @click="postData(file)">POST</button>
                 </div>
 
                 <span class="authentication" v-if="file.auth">

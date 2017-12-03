@@ -33,10 +33,15 @@
                 for (let i = 0; i < this.$route.params.step || 0; i++) {
                     this.$store.commit('INCREMENT_TOTAL_SUBMITTED')
                 }
-                if (!this.$route.params.step) {
-                    setTimeout(() => {
-                        this.$store.commit('ADD_REQUEST', this.currentScriptedEvents[0].req)
-                    }, 1000)
+                // Kick tutorial loop
+                if (this.$route.params.level === '1' || this.$route.params.level === '2') {
+                    if (!this.$route.params.step) {
+                        setTimeout(() => {
+                            this.$store.commit('ADD_REQUEST', this.currentScriptedEvents[0].req)
+                        }, 1000)
+                    }
+                } else {
+                    // Kick main game loop
                 }
             }
         },
@@ -70,6 +75,14 @@
                         this.currentScriptedEvents[newVal].callback()
                     }
                 }, Math.random() * 2000)
+
+                // only on level 2
+                if (this.$route.params.level === '2') {
+                    // covers 3 training rounds + 5 correct answers
+                    if (newVal >= 6) {
+                        this.$store.commit('SET_MESSAGE', 'Level complete!')
+                    }
+                }
             },
             '$store.state.score' (newVal) {
                 // only on level 1

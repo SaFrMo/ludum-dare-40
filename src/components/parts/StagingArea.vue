@@ -10,7 +10,10 @@
 
                 <div class="work-area" key="work-area" v-else-if="$store.state.staging">
                     <div class="label">
-                        <span class="code">{{ staging.command }}</span>
+                        <span class="code">
+                            <span class="svg-wrap" v-html="getIconFor(staging.command)"></span>
+                            <span>{{ staging.command }}</span>
+                        </span>
                         <span class="path">{{ staging.path }}</span>
                     </div>
 
@@ -65,10 +68,10 @@
                     </div>
 
                     <div class="controls">
+                        <button @click="staging.files = []; $store.commit('SET_RESPONSE_CODE', '404 Not Found')">404 Not Found</button>
                         <button
                             @click="staging.files = []; $store.commit('SET_RESPONSE_CODE', '403 Forbidden')"
                             v-if="parseInt($route.params.level) >= 2 && $store.state.totalSubmitted >= 3">403 Forbidden</button>
-                        <button @click="staging.files = []; $store.commit('SET_RESPONSE_CODE', '404 Not Found')">404 Not Found</button>
                         <!-- <button>File is locked</button> -->
                         <button @click="$store.commit('MOVE_TO_RECEIVING', staging)">Send back to queue</button>
                         <button class="submit" @click="submit">Submit</button>
@@ -87,6 +90,9 @@
 
 <script>
     import keySvg from '@/assets/key.svg'
+    import pencilSvg from '@/assets/pencil.svg'
+    import handSvg from '@/assets/open-palm.svg'
+
     export default {
         data () {
             return {
@@ -104,6 +110,9 @@
                 setTimeout(() => {
                     this.$store.commit('REMOVE_OLDEST_OUTPUT')
                 }, 3000)
+            },
+            getIconFor (command) {
+                return command === 'GET' ? handSvg : pencilSvg
             }
         }
     }
@@ -142,13 +151,24 @@
             background-color: #fff;
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-end;
             padding: 10px;
             min-height: 27px;
         }
         .label .code {
             font-size: 24px;
-            margin-bottom: 5px;
+            display: flex;
+            align-items: flex-end;
+        }
+        .label .code .svg-wrap {
+            font-size: 0;
+        }
+        .label .code svg {
+            background-color: rgba(0, 0, 0, 0.8);
+            width: 32px;
+            height: 32px;
+            padding: 5px;
+            margin-right: 10px;
         }
         .request-headers {
             text-align: left;

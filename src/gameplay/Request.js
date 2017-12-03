@@ -22,6 +22,9 @@ export default class RequestResponse {
 
         // -1: not validated, 0: fail, 1: success
         this.validated = -1
+
+        // Reason for validation failure
+        this.failureReason = ''
     }
 
     validate () {
@@ -34,15 +37,20 @@ export default class RequestResponse {
 
         if (is404) {
             output = this.code.includes('404')
+            this.failureReason = `<code>${this.path}</code> doesn't exist - should be 404 Not Found.`
         } else if (is403) {
             output = this.code.includes('403')
+            this.failureReason = `No or incorrect authorization - should be 403 Forbidden.`
         } else if (this.command === 'GET') {
             // GET: we should have requested files attached
             output = `/${this.files[0]}` === this.path
+            this.failureReason = this.files.length
+                ? `<code>${this.files[0]}</code> does not match requested file <code>${this.path}</code>.`
+                : `<code>${this.path}</code> requested, but no files attached.`
         } else if (this.command === 'POST') {
             // Handle POST validation
-            output = this.responseBody.find(x => x.includes(`Data posted to <code>${this.path}</code>.`)) &&
-                this.files.length === 0
+            output = this.responseBody.find(x => x.includes(`Data posted to <code>${this.path}</code>.`))
+            this.failureReason = `Data not posted to <code>${this.path}</code>.`
         }
 
         this.validated = output ? 1 : 0

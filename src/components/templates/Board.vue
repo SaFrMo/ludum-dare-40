@@ -10,7 +10,7 @@
         <file-browser/>
 
         <div class="meta">
-            <h2 class="score">Score: {{ $store.state.score }}</h2>
+            <h2 class="score">Score: {{ $store.state.score }} / {{ $store.state.totalSubmitted }}</h2>
             <div class="time">Time: {{ timerValue }}</div>
         </div>
 

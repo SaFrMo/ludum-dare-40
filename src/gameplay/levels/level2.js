@@ -66,7 +66,7 @@ export default {
             [{
                 label: 'AUTH-Tutorial',
                 value: `Not just anyone can POST anywhere, though. Some files require special authorization.`,
-                stagingValue: `The Authorization below contains two fields: first, the authorization type (in this case, Basic), then the credentials (usually a password or cookie), which come after a space.<br/><br/>If any request doesn't match the desired file's password, we'll need to return a new response: 403 Forbidden.`,
+                stagingValue: `The Authorization below contains two fields: first, the authorization type (in this case, Basic), then the credentials (usually a password or cookie), which come after a space.<br/><br/>If any request doesn't match the desired file's password, we'll need to return a new response: 403 Forbidden. Click on the new "403 Forbidden" button, then click Submit.`,
                 outputValue: ``
             }, {
                 label: 'Authorization',
@@ -78,6 +78,34 @@ export default {
                 authPages.map(page => store.commit('ADD_FILE', { name: page, auth: 'Basic 5up3r5tr0ngp4ssw0rd' }))
             }
 
-        }
+        },
+        { req: new Request(
+            'POST',
+            '/vault/money.html',
+            [{
+                label: 'AUTH-Tutorial',
+                value: `Great! Let's see this request's authentication.`,
+                stagingValue: `Remember that the request body is a red herring when it comes to authorization! Pay attention to the password instead. If it matches the file's password, go ahead and finish the response - otherwise, send back a 403.`,
+                outputValue: ``
+            }, {
+                label: 'Authorization',
+                value: 'Basic 5up3r5tr0ngp4ssw0rd'
+            }],
+            `{ "transaction": "send-money", "amount": 4000, "to": "recipient@bank-customer.com" }`
+        )},
+        { req: new Request(
+            'POST',
+            '/posts/my-first-post.html',
+            [{
+                label: 'Tutorial',
+                value: `You've got the hang of it! From here on out, you're on your own. See how many requests you can correctly respond to in one minute.`,
+                stagingValue: `Good luck, have fun, and happy Ludum Dare 40!`,
+                outputValue: ``
+            }, {
+                label: 'Authorization',
+                value: 'Basic 5up3r5tr0ngp4ssw0rd'
+            }],
+            `{ "ludumDareIsTheBest": true }`
+        )}
     ]
 }

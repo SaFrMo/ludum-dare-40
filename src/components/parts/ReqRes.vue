@@ -67,17 +67,18 @@
                             <span class="code">{{ response.code }}</span>
                         </div>
 
-                        <div class="fields" v-if="response.headers.length || response.files.length">
-                            <!-- <div class="headers" v-if="response.headers.length">Headers: {{ response.headers }}</div> -->
-                            <div class="body" v-if="response.files.length">
-                                <span>Files:</span>
+                        <!-- <div class="fields" v-if="response.headers.length || response.files.length"> -->
+                            <div class="failure-reasons" v-if="response.validated <= 0 && response.failureReason">
                                 <ul>
+                                    <li v-html="response.failureReason"></li>
+                                </ul>
+                                <!-- <ul>
                                     <li v-for="(file, i) in response.files" :key="i">
                                         {{ file }}
                                     </li>
-                                </ul>
+                                </ul> -->
                             </div>
-                        </div>
+                        <!-- </div> -->
                     </div>
 
                     <div class="validation-wrap">
@@ -222,6 +223,11 @@
         // Output
         .output {
             margin-top: 20px;
+        }
+        .failure-reasons {
+            text-align: left;
+            margin-top: 10px;
+            font-size: 18px;
         }
     }
 
