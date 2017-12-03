@@ -19,7 +19,7 @@ export default new Vuex.Store({
         timerDoneMarker: false,
         message: false,
         debug: true,
-        secondsPerRound: 450
+        secondsPerRound: 20
     },
     mutations: {
         'ADD_REQUEST': (state, payload) => {

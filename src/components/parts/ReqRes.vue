@@ -14,7 +14,7 @@
                 <div
                     class="single-request"
                     v-for="(request, i) in $store.state.requests"
-                    :key="i"
+                    :key="request.id"
                     @click="$store.commit('MOVE_TO_STAGING', request)">
 
                     <div class="label">
@@ -127,11 +127,15 @@
     #app .req-res {
         background-color: $left-bg;
         color: #fff;
+        justify-content: flex-start;
 
         & > div {
             height: calc(50% - 10px);
             background-color: darken($left-bg, 15%);
             overflow-x: hidden;
+        }
+        .output {
+            height: calc(50% - 190px);
         }
 
         // Request
@@ -208,12 +212,20 @@
         // Response
         .single-response {
             @extend .single-request;
+            min-height: 100%;
+            margin-bottom: 0;
+
+            .content {
+                padding: 0 5px;
+            }
             ul {
                 margin: 5px auto 0;
             }
             .validation-wrap {
                 display: flex;
                 justify-content: flex-end;
+                align-items: flex-end;
+                flex: 1;
             }
             .validation {
                 width: 75px;

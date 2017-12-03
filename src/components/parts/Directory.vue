@@ -73,6 +73,7 @@
         list-style-type: none;
         padding: 0;
         text-align: left;
+        margin: 0;
 
         .file-wrapper {
             background-color: rgba(0, 0, 0, 0.4);

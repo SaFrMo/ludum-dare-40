@@ -36,7 +36,10 @@
                 }, this.$store.state.secondsPerRound * 1000)
             },
             getSummary () {
-                return 'Level complete!'
+                return `Level ${this.$route.params.level} complete!<br/>
+                Score: ${this.$store.state.score}<br/>
+                Percent Correct: ${this.$store.state.score / this.$store.state.totalSubmitted}<br/>
+                Average Time per Response: ${(this.$store.state.secondsPerRound * 4 / this.$store.state.totalSubmitted).toFixed(2)} ms`
             },
             setupLevel () {
                 // Clear score, timer, all game files at start of new level

@@ -12,7 +12,7 @@
 
             <div class="meta">
                 <h2 class="score">Score: {{ $store.state.score }} / {{ $store.state.totalSubmitted }}</h2>
-                <div class="time">Time: {{ $store.state.timerLoop ? $store.state.timerValue : 0 }} / {{ $store.state.secondsPerRound * 4 }}</div>
+                <div class="time">0.{{ $store.state.timerLoop ? $store.state.timerValue.toString().padStart(4, '0') : '00' }} sec / {{ '0.0' + ($store.state.secondsPerRound * 4).toString().padStart(2, '0') }} sec</div>
             </div>
         </section>
 
@@ -58,13 +58,13 @@
 
         & > section {
             height: 100%;
+            overflow-y: auto;
             width: calc(100% / 3);
             padding: 20px;
             box-sizing: border-box;
 
             display: flex;
             flex-direction: column;
-            justify-content: center;
         }
 
         & > section > div {
@@ -89,13 +89,16 @@
         }
         .meta {
             position: fixed;
-            right: 0;
-            bottom: 0;
+            bottom: 20px;
+            left: 20px;
             background-color: rgba(0, 0, 0, 0.4);
             color: #fff;
             margin: 0;
-            padding: 20px;
+            padding: 30px 20px 10px;
             font-size: 24px;
+            height: 120px;
+            text-align: left;
+            width: calc((100% / 3) - 80px);
 
             h2 {
                 margin-top: 0;
