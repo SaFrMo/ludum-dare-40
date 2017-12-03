@@ -4,8 +4,18 @@
             <div class="file-wrapper" v-if="typeof file === 'string' || file.auth">
                 <span class="filename" v-html="getFile(file)"></span>
                 <div class="file-controls-wrap">
-                    <button @click="addFile(file)">GET</button>
-                    <button v-if="$route.params.level > 1" @click="postData(file)">POST</button>
+                    <button @click="addFile(file)">
+                        <span class="button-content-wrap">
+                            <span class="svg-wrap" v-html="hand"></span>
+                            <span class="command">GET</span>
+                        </span>
+                    </button>
+                    <button v-if="$route.params.level > 1" @click="postData(file)">
+                        <span class="button-content-wrap">
+                            <span class="svg-wrap" v-html="pencil"></span>
+                            <span class="command">POST</span>
+                        </span>
+                    </button>
                 </div>
 
                 <span class="authentication" v-if="file.auth">
@@ -23,10 +33,14 @@
 
 <script>
     import padlock from '@/assets/padlock.svg'
+    import hand from '@/assets/open-palm.svg'
+    import pencil from '@/assets/pencil.svg'
     export default {
         data () {
             return {
-                padlock
+                padlock,
+                hand,
+                pencil
             }
         },
         props: {
@@ -49,19 +63,6 @@
 
                 return file.name
             }
-        },
-        computed: {
-            // computedTree () {
-            //     const output = [{ name: '/', dirs: [], files: [] }]
-            //
-            //     this.tree.map(entry => {
-            //         const arr = entry.split('/')
-            //         arr.pop()
-            //
-            //     })
-            //
-            //     return output
-            // }
         }
     }
 </script>
@@ -72,7 +73,6 @@
         list-style-type: none;
         padding: 0;
         text-align: left;
-
 
         .file-wrapper {
             background-color: rgba(0, 0, 0, 0.4);
@@ -92,13 +92,30 @@
         .file-controls-wrap button {
             font-size: 16px;
             background-color: #fff !important;
-            margin: 0 5px;
+            margin: 0 20px;
             transition: color 0.4s, background-color 0.4s;
+            padding: 0 !important;
             cursor: pointer;
 
             &:hover, &:focus {
                 background-color: #000 !important;
                 color: #fff;
+            }
+            .button-content-wrap {
+                display: flex;
+                align-items: center;
+
+                .svg-wrap {
+                    display: block;
+                    width: 48px;
+                    height: 48px;
+                    background-color: rgba(0, 0, 0, 0.8);
+                    margin-right: 15px;
+                    padding: 5px;
+                }
+                .command {
+                    margin-right: 15px;
+                }
             }
         }
         .file-controls-wrap button:last-child {

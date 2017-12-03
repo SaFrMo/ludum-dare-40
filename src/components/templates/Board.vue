@@ -7,17 +7,19 @@
 
         <staging-area/>
 
-        <file-browser/>
+        <section class="browser-wrap">
+            <file-browser/>
 
-        <div class="meta">
-            <h2 class="score">Score: {{ $store.state.score }} / {{ $store.state.totalSubmitted }}</h2>
-            <div class="time">Time: {{ timerValue }}</div>
-        </div>
+            <div class="meta">
+                <h2 class="score">Score: {{ $store.state.score }} / {{ $store.state.totalSubmitted }}</h2>
+                <div class="time">Time: {{ $store.state.timerLoop ? $store.state.timerValue : 0 }} / {{ $store.state.secondsPerRound * 4 }}</div>
+            </div>
+        </section>
 
         <transition-fade>
             <div class="message" v-if="$store.state.message">
                 <div v-html="$store.state.message"></div>
-                <router-link :to="`/level-${ parseInt(this.$route.params.level) + 1 }`">Next Level</router-link>
+                <router-link v-if="parseInt($route.params.level) > 2 && $store.state.totalSubmitted > 0" :to="`/level-${ parseInt(this.$route.params.level) + 1 }`">Next Level</router-link>
             </div>
         </transition-fade>
 
@@ -38,19 +40,14 @@
         computed: {
             currentLevelEvents () {
                 return scriptedEvents[this.$route.params.level]
-            },
-            timerValue () {
-                const rawValue = this.$store.state.timerOn
-                    ? Date.now() - this.$store.state.timerStart
-                    : this.$store.state.timerStop - this.$store.state.timerStart
-
-                return rawValue
             }
         }
     }
 </script>
 
 <style lang="scss">
+
+    @import 'src/styles/vars';
 
     .board {
         height: 100%;
@@ -85,7 +82,11 @@
             justify-content: center;
             padding: 20px;
         }
-
+        .browser-wrap {
+            background-color: $right-bg;
+            display: flex;
+            flex-direction: column;
+        }
         .meta {
             position: fixed;
             right: 0;
@@ -94,6 +95,7 @@
             color: #fff;
             margin: 0;
             padding: 20px;
+            font-size: 24px;
 
             h2 {
                 margin-top: 0;
@@ -108,6 +110,7 @@
             left: 0;
             background-color: rgba(0, 0, 0, 0.8);
             color: #fff;
+            font-size: 24px;
 
             display: flex;
             justify-content: center;

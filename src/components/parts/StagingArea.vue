@@ -71,7 +71,7 @@
                         <button @click="staging.files = []; $store.commit('SET_RESPONSE_CODE', '404 Not Found')">404 Not Found</button>
                         <button
                             @click="staging.files = []; $store.commit('SET_RESPONSE_CODE', '403 Forbidden')"
-                            v-if="parseInt($route.params.level) >= 2 && $store.state.totalSubmitted >= 3">403 Forbidden</button>
+                            v-if="(parseInt($route.params.level) > 2 || (parseInt($route.params.level) === 2 && $store.state.totalSubmitted >= 3))">403 Forbidden</button>
                         <!-- <button>File is locked</button> -->
                         <button @click="$store.commit('MOVE_TO_RECEIVING', staging)">Send back to queue</button>
                         <button class="submit" @click="submit">Submit</button>
@@ -81,9 +81,9 @@
 
         </div>
 
-        <div class="cache">
+        <!-- <div class="cache">
 
-        </div>
+        </div> -->
     </section>
 
 </template>
@@ -126,7 +126,8 @@
         background-color: $center-bg;
 
         & > .staging {
-            height: calc(75% - 10px);
+            // height: calc(75% - 10px);
+            height: 100%;
         }
         & > .cache {
             height: calc(25% - 10px);

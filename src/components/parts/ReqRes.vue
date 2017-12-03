@@ -10,7 +10,7 @@
                 </div>
             </transition-fade>
 
-            <transition-group name="slide-in">
+            <transition-group name="slide-in" mode="out-in">
                 <div
                     class="single-request"
                     v-for="(request, i) in $store.state.requests"
@@ -23,6 +23,7 @@
 
                     <div class="content">
                         <div :class="['request-line', { 'has-border': request.headers.length || request.body }]">
+                            <span class="svg-wrap" v-html="getIconFor(request.command)"></span>
                             <span class="code">{{ request.command }}</span>
                             <span class="path">{{ request.path }}</span>
                         </div>
@@ -96,6 +97,8 @@
 <script>
     import fail from '@/assets/thumb-down.svg'
     import succeed from '@/assets/thumb-up.svg'
+    import pencilSvg from '@/assets/pencil.svg'
+    import handSvg from '@/assets/open-palm.svg'
 
     export default {
         methods: {
@@ -109,6 +112,9 @@
                 }
 
                 return response.validated > 0 ? succeed : fail
+            },
+            getIconFor (command) {
+                return command === 'GET' ? handSvg : pencilSvg
             }
         }
     }
@@ -158,28 +164,36 @@
                 background-color: #ddd;
             }
             .content {
-                padding: 5px 10px 10px;
+                padding: 0 10px 0 0;
             }
         }
         .request-line {
-            padding: 5px;
             width: 100%;
             box-sizing: border-box;
 
             display: flex;
             justify-content: space-between;
-            align-items: flex-end;
+            align-items: center;
         }
         .request-line.has-border {
             padding-bottom: 10px;
             border-bottom: 2px solid #fff;
         }
+        .request-line .svg-wrap {
+            height: 48px;
+            width: 48px;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+        }
         .request-line .code {
             text-align: left;
             font-size: 24px;
+            margin: 10px;
         }
         .request-line .path {
             text-align: right;
+            flex: 1;
+            margin: 5px;
         }
         .fields {
             padding: 10px 5px;

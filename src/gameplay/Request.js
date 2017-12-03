@@ -58,9 +58,9 @@ export default class RequestResponse {
     }
 
     generateRandomPath () {
-        // Coin flip - will we be an existing file?
+        // Weighted coin flip - will we be an existing file?
         let existing = true
-        if (Math.random() > 0.5) {
+        if (Math.random() < 0.3) {
             existing = false
         }
 

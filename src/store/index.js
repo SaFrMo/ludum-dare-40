@@ -14,10 +14,12 @@ export default new Vuex.Store({
         cache: [],
         output: [],
         files: [],
-        timerStart: 0,
-        timerStop: 0,
-        timerOn: false,
-        message: false
+        timerValue: 0,
+        timerLoop: false,
+        timerDoneMarker: false,
+        message: false,
+        debug: true,
+        secondsPerRound: 450
     },
     mutations: {
         'ADD_REQUEST': (state, payload) => {
@@ -69,6 +71,9 @@ export default new Vuex.Store({
         'CHANGE_SCORE_BY': (state, delta) => {
             state.score += delta
         },
+        'SET_TOTAL_SUBMITTED': (state, payload) => {
+            state.totalSubmitted = payload
+        },
         'INCREMENT_TOTAL_SUBMITTED': state => {
             state.totalSubmitted++
         },
@@ -76,13 +81,14 @@ export default new Vuex.Store({
             state.files.push(payload)
             state.files.sort()
         },
-        'ACTIVATE_TIMER': state => {
+        'START_TIMER': (state, payload) => {
             state.timerStart = Date.now()
-            state.timerOn = true
+            state.timerLoop = setInterval(() => state.timerValue++, 250)
         },
-        'DEACTIVATE_TIMER': state => {
+        'STOP_TIMER': state => {
             state.timerStop = Date.now()
-            state.timerOn = false
+            clearTimeout(state.timerLoop)
+            state.timerLoop = false
         },
         'SET_MESSAGE': (state, payload) => {
             state.message = payload
@@ -92,6 +98,9 @@ export default new Vuex.Store({
             state.requests = []
             state.staging = false
             state.output = []
+            state.score = 0
+            state.totalSubmitted = 0
+            state.timerValue = 0
         }
     }
 })
