@@ -1,12 +1,17 @@
 <template>
     <ul class="directory">
         <li v-for="file in tree">
-            <div class="file-wrapper" v-if="typeof file === 'string'">
-                <span class="filename" v-html="file"></span>
+            <div class="file-wrapper" v-if="typeof file === 'string' || file.auth">
+                <span class="filename" v-html="getFile(file)"></span>
                 <div class="file-controls-wrap">
                     <button @click="addFile(file)">Add to Response</button>
                     <button v-if="$route.params.level > 1" @click="postData(file)">Post Data</button>
                 </div>
+
+                <span class="authentication" v-if="file.auth">
+                    <div class="svg-wrap" v-html="padlock"></div>
+                    <span>{{ file.auth }}</span>
+                </span>
             </div>
             <div v-else>
                 <span>{{ file.name }}</span>
@@ -17,7 +22,13 @@
 </template>
 
 <script>
+    import padlock from '@/assets/padlock.svg'
     export default {
+        data () {
+            return {
+                padlock
+            }
+        },
         props: {
             tree: {
                 type: [Object, Array],
@@ -32,6 +43,11 @@
             postData (file) {
                 this.$store.commit('SET_RESPONSE_CODE', '200 OK')
                 this.$store.commit('POST_DATA', file)
+            },
+            getFile (file) {
+                if (typeof file === 'string') return file
+
+                return file.name
             }
         },
         computed: {
@@ -87,6 +103,26 @@
         }
         .file-controls-wrap button:last-child {
             margin: 0;
+        }
+        .authentication {
+            margin: 10px;
+            background-color: rgba(0, 0, 0, 0.4);
+            padding: 5px;
+            color: #0c0;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+
+            .svg-wrap {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            svg {
+                width: 32px;
+                height: 32px;
+            }
         }
     }
 

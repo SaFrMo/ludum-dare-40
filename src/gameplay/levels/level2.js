@@ -1,17 +1,20 @@
 import Request from '../Request'
 import store from '@/store'
 
+const authPages = [
+    'vault/money.html',
+    'vault/gold.html'
+    // 'nnedi/who-fears-death.html',
+    // 'nnedi/binti.html',
+    // 'nnedi/the-book-of-phoenix.html',
+    // 'nkjemisin/the-fifth-season.html',
+    // 'nkjemisin/the-obelisk-gate.html',
+    // 'nkjemisin/the-stone-sky.html'
+]
+
 export default {
     files: [
-        // 'level2.html',
         'posts/my-first-post.html'
-        // 'posts/more-things-to-say.html'
-        // 'nnedi/who-fears-death.html',
-        // 'nnedi/binti.html',
-        // 'nnedi/the-book-of-phoenix.html',
-        // 'nkjemisin/the-fifth-season.html',
-        // 'nkjemisin/the-obelisk-gate.html',
-        // 'nkjemisin/the-stone-sky.html'
     ],
     requests: [
         { req: new Request(
@@ -54,6 +57,25 @@ export default {
         ),
             callback: () => {
                 store.commit('ADD_FILE', 'posts/second-post.html')
+            }
+
+        },
+        { req: new Request(
+            'POST',
+            '/vault/money.html',
+            [{
+                label: 'AUTH-Tutorial',
+                value: `Not just anyone can POST anywhere, though. Some files require special authorization.`,
+                stagingValue: `The Authorization header contains two fields: the authorization type (in this case, Basic), then the credentials (usually a password or cookie) come after a space.<br/><br/>This authorization doesn't match the required value for vault/money.html, so let's return a new response: 403 Forbidden.`,
+                outputValue: ``
+            }, {
+                label: 'Authorization',
+                value: 'Basic password123'
+            }],
+            `send all money to rob-banks-the-bank-robber@criminal.com please. thank you`
+        ),
+            callback: () => {
+                authPages.map(page => store.commit('ADD_FILE', { name: page, auth: 'Basic 5up3r5tr0ngp4ssw0rd' }))
             }
 
         }
