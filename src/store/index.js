@@ -17,7 +17,8 @@ export default new Vuex.Store({
         files,
         timerStart: 0,
         timerStop: 0,
-        timerOn: false
+        timerOn: false,
+        message: false
     },
     mutations: {
         'ADD_REQUEST': (state, payload) => {
@@ -72,6 +73,9 @@ export default new Vuex.Store({
         'DEACTIVATE_TIMER': state => {
             state.timerStop = Date.now()
             state.timerOn = false
+        },
+        'SET_MESSAGE': (state, payload) => {
+            state.message = payload
         }
     }
 })

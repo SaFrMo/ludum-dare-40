@@ -21,6 +21,19 @@
                 type: Array,
                 default: []
             }
+        },
+        computed: {
+            // computedTree () {
+            //     const output = [{ name: '/', dirs: [], files: [] }]
+            //
+            //     this.tree.map(entry => {
+            //         const arr = entry.split('/')
+            //         arr.pop()
+            //
+            //     })
+            //
+            //     return output
+            // }
         }
     }
 </script>

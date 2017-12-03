@@ -46,6 +46,11 @@
                         }
                     }, Math.random() * 2000)
                 }
+            },
+            '$store.state.score' (newVal) {
+                if (newVal >= 10) {
+                    this.$store.commit('SET_MESSAGE', 'Level complete!')
+                }
             }
         }
     }

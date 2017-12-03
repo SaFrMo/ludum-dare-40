@@ -14,6 +14,13 @@
             <div class="time">Time: {{ timerValue }}</div>
         </div>
 
+        <transition-fade>
+            <div class="message" v-if="$store.state.message">
+                <div v-html="$store.state.message"></div>
+                <router-link :to="`/level-${ parseInt(this.$route.params.level) + 1 }`">Next Level</router-link>
+            </div>
+        </transition-fade>
+
     </main>
 </template>
 
@@ -90,6 +97,34 @@
 
             h2 {
                 margin-top: 0;
+            }
+        }
+
+        .message {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .message a {
+            margin-top: 20px;
+            background-color: #fff;
+            color: #000;
+            padding: 10px;
+            text-decoration: none;
+            transition: color 0.4s, background-color 0.4s;
+
+            &:hover, &:focus {
+                background-color: #000;
+                color: #fff;
             }
         }
     }
