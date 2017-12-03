@@ -25,7 +25,7 @@
 </template>
 
 <script>
-    import scriptedEvents from '@/gameplay/levels'
+    import scriptedEvents from '@/gameplay/levels/level1'
 
     export default {
         components: {

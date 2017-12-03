@@ -1,6 +1,6 @@
 <template>
     <ul class="directory">
-        <li v-for="file in tree">
+        <li v-for="file in tree.files">
             <div
                 v-if="typeof file === 'string'"
                 @click="$store.commit('SET_RESPONSE_CODE', '200 OK'); $store.commit('ADD_FILE_TO_STAGING', file)">
@@ -18,8 +18,8 @@
     export default {
         props: {
             tree: {
-                type: Array,
-                default: []
+                type: Object,
+                default: () => {}
             }
         },
         computed: {

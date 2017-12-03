@@ -9,9 +9,10 @@
                 </div>
 
                 <div class="work-area" key="work-area" v-else-if="$store.state.staging">
-                    <!-- <div class="label">
-                        Processing...
-                    </div> -->
+                    <div class="label">
+                        <span class="code">{{ staging.command }}</span>
+                        <span class="path">{{ staging.path }}</span>
+                    </div>
 
                     <div class="request-headers" v-if="$store.state.staging.headers.length">
                         <span>Request Headers:</span>
@@ -21,11 +22,6 @@
                                 <div v-html="header.stagingValue || header.value"></div>
                             </li>
                         </ul>
-                    </div>
-
-                    <div class="label">
-                        <span class="code">{{ staging.command }}</span>
-                        <span class="path">{{ staging.path }}</span>
                     </div>
 
                     <div class="response-building">

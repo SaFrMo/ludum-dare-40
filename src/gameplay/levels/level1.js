@@ -2,15 +2,16 @@ import Request from '../Request'
 import allLevelOneFiles from '@/gameplay/levels/allLevelOneFiles'
 import store from '@/store'
 
-export default [
-    [
+export default {
+    files: ['level1'],
+    requests: [
         { req: new Request(
             'GET',
             '/hello-world.html',
             [{
                 label: 'Tutorial',
                 value: `Hello, little HTTP server! I'm a "request" - a message from a computer asking you to do something. When you're ready, click me to start working on your response.`,
-                stagingValue: `Take a look at the banner below this text. See the "GET" on the left side? That means I'm asking you to "GET" a file for me - in this case, "hello-world.html" (shown on the right side of the banner).<br/><br/>Find "hello-world.html" on your hard drive and click to attach it to the response. Then, when you're ready, click "Submit."`,
+                stagingValue: `Take a look at the banner above this text. See the "GET" on the left side? That means I'm asking you to "GET" a file for me - in this case, "hello-world.html" (shown on the right side of the banner).<br/><br/>Find "hello-world.html" on your hard drive and click to attach it to the response. Then, when you're ready, click "Submit."`,
                 outputValue: ``
             }]
         )},
@@ -41,7 +42,7 @@ export default [
                 [{
                     label: 'Tutorial',
                     value: `That's where the famous "404" error comes from - a server not being able to find a requested file! Click me for one more training round.`,
-                    stagingValue: `You've loaded up a few more files now that you're all warmed up, so see how quickly you can get ten correct responses, starting with this one. The milliseconds are ticking by - good luck!`
+                    stagingValue: `You've loaded up a few more files now that you're all warmed up, so see how quickly you can get five correct responses, starting with this one. The milliseconds are ticking by - good luck!`
                 }]
             ),
             callback: () => {
@@ -52,4 +53,4 @@ export default [
             }
         }
     ]
-]
+}

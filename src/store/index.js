@@ -76,6 +76,11 @@ export default new Vuex.Store({
         },
         'SET_MESSAGE': (state, payload) => {
             state.message = payload
+        },
+        'RESET_BOARD': state => {
+            state.requests = []
+            state.staging = false
+            state.output = []
         }
     }
 })
