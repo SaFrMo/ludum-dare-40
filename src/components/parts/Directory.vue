@@ -88,7 +88,6 @@
         }
         .file-controls-wrap {
             text-align: right;
-            margin-bottom: 10px;
         }
         .file-controls-wrap button {
             font-size: 16px;
@@ -123,7 +122,7 @@
             margin: 0;
         }
         .authentication {
-            margin: 10px;
+            margin: 10px 10px 0;
             background-color: rgba(0, 0, 0, 0.55);
             padding: 5px;
             color: #0c0;

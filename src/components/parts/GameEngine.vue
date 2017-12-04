@@ -36,10 +36,17 @@
                 }, this.$store.state.secondsPerRound * 1000)
             },
             getSummary () {
-                return `Level ${this.$route.params.level} complete!<br/>
+                let output = `Level ${this.$route.params.level} complete!<br/>
                 Score: ${this.$store.state.score}<br/>
-                Percent Correct: ${this.$store.state.score / this.$store.state.totalSubmitted}<br/>
-                Average Time per Response: ${(this.$store.state.secondsPerRound * 4 / this.$store.state.totalSubmitted).toFixed(2)} ms`
+                Percent Correct: ${Math.ceil((this.$store.state.score / this.$store.state.totalSubmitted) * 100)}%<br/>
+                Average Time per Response: ${(this.$store.state.secondsPerRound * 4 / this.$store.state.totalSubmitted).toFixed(2)} ms<br/>
+                Requests Received: ${this.$store.state.requestsReceived}`
+
+                if (this.$route.params.level === '3') {
+                    output += '<br/><br/>The game continues on an infinite loop from here, with requests coming in faster every level.<br/><br/>You can also change the URL to level-(any number) to jump to different levels yourself.<br/><br/>Thanks for playing and happy Ludum Dare 40!'
+                }
+
+                return output
             },
             setupLevel () {
                 // Clear score, timer, all game files at start of new level

@@ -19,10 +19,12 @@ export default new Vuex.Store({
         timerDoneMarker: false,
         message: false,
         debug: true,
-        secondsPerRound: 20
+        secondsPerRound: 20,
+        requestsReceived: 0
     },
     mutations: {
         'ADD_REQUEST': (state, payload) => {
+            state.requestsReceived++
             state.requests.push(payload)
         },
         'SET_SELECTED': (state, payload) => {
@@ -101,6 +103,7 @@ export default new Vuex.Store({
             state.score = 0
             state.totalSubmitted = 0
             state.timerValue = 0
+            state.requestsReceived = 0
         }
     }
 })

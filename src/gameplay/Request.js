@@ -9,7 +9,7 @@ export default class RequestResponse {
 
         this.command = newCommand
         this.path = path || this.generateRandomPath()
-        this.headers = headers || []
+        this.headers = headers || this.generateHeaders()
         this.body = body || ''
         this.id = Date.now()
         this.files = []
@@ -80,6 +80,25 @@ export default class RequestResponse {
         }
 
         return '/' + output
+    }
+
+    generateHeaders () {
+        let output = []
+
+        const fileInStore = store.state.files.find(file => `/${file}` === this.path || this.path === `/${file.name}`)
+
+        // if file has authorization requirements...
+        if (fileInStore && fileInStore.auth) {
+            // coin flip to generate permissions
+            if (Math.random() > 0.3) {
+                output.push({
+                    label: 'Authorization',
+                    value: fileInStore.auth
+                })
+            }
+        }
+
+        return output
     }
 
     randomFromArray (arr) {
