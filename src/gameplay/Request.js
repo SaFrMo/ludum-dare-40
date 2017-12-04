@@ -1,4 +1,5 @@
 import store from '@/store'
+import bodyPool from '@/gameplay/bodyPool'
 
 export default class RequestResponse {
     constructor (command, path, headers, body, code, expectedFile) {
@@ -10,7 +11,7 @@ export default class RequestResponse {
         this.command = newCommand
         this.path = path || this.generateRandomPath()
         this.headers = headers || this.generateHeaders()
-        this.body = body || ''
+        this.body = body || this.generateBody()
         this.id = Date.now()
         this.files = []
 
@@ -70,13 +71,7 @@ export default class RequestResponse {
             output = output.name
         }
         if (!existing) {
-            const chars = output.split('')
-            const index1 = Math.floor(Math.random() * chars.length)
-            const index2 = Math.floor(Math.random() * chars.length)
-            let holder = chars[index1]
-            chars[index1] = chars[index2]
-            chars[index2] = holder
-            output = chars.join('')
+            output = this.shuffleChars(output)
         }
 
         return '/' + output
@@ -90,10 +85,10 @@ export default class RequestResponse {
         // if file has authorization requirements...
         if (fileInStore && fileInStore.auth) {
             // coin flip to generate permissions
-            if (Math.random() > 0.3) {
+            if (Math.random() < 0.75) {
                 output.push({
                     label: 'Authorization',
-                    value: fileInStore.auth
+                    value: Math.random() < 0.3 ? this.shuffleChars(fileInStore.auth) : fileInStore.auth
                 })
             }
         }
@@ -101,7 +96,26 @@ export default class RequestResponse {
         return output
     }
 
+    generateBody () {
+        let output = ''
+        if (Math.random() > 0.7) {
+            output = this.randomFromArray(bodyPool)
+        }
+
+        return output
+    }
+
     randomFromArray (arr) {
         return arr[Math.floor(Math.random() * arr.length)]
+    }
+
+    shuffleChars (output) {
+        const chars = output.split('')
+        const index1 = Math.floor(Math.random() * chars.length)
+        const index2 = Math.floor(Math.random() * chars.length)
+        let holder = chars[index1]
+        chars[index1] = chars[index2]
+        chars[index2] = holder
+        return chars.join('')
     }
 }

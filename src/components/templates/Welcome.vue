@@ -1,6 +1,6 @@
 <template>
     <main class="welcome-template">
-        <h1>chapter 0:<br/>hello, world</h1>
+        <h1>http: the game</h1>
 
         <transition-group name="slide" appear mode="out-in">
             <section

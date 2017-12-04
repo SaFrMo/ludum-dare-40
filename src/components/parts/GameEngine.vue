@@ -43,7 +43,7 @@
                 Requests Received: ${this.$store.state.requestsReceived}`
 
                 if (this.$route.params.level === '3') {
-                    output += '<br/><br/>The game continues on an infinite loop from here, with requests coming in faster every level.<br/><br/>You can also change the URL to level-(any number) to jump to different levels yourself.<br/><br/>Thanks for playing and happy Ludum Dare 40!'
+                    output += '<br/><br/>The game continues on an infinite loop from here, pulling from a few different sets of files with requests coming in faster every level.<br/><br/>You can also change the URL to level-(any number) to jump to different levels yourself.<br/><br/>Thanks for playing and happy Ludum Dare 40!'
                 }
 
                 return output
@@ -108,7 +108,7 @@
         },
         computed: {
             currentScriptedEvents () {
-                return this.scriptedEvents[this.$route.params.level - 1].requests
+                return this.scriptedEvents ? this.scriptedEvents[this.$route.params.level - 1].requests : false
             },
             totalSubmitted () {
                 return this.$store.state.totalSubmitted
@@ -118,15 +118,7 @@
             totalSubmitted (newVal) {
                 setTimeout(() => {
                     if (this.currentScriptedEvents.length <= newVal) {
-                        let restrictCommands = false
-                        const level = this.$route.params.level
-                        if (level === 1) {
-                            restrictCommands = 'GET'
-                        } else if (level === 2) {
-                            restrictCommands = ['GET', 'POST']
-                        }
-
-                        this.$store.commit('ADD_REQUEST', new Request(restrictCommands))
+                        this.$store.commit('ADD_REQUEST', new Request(this.$route.params.level === '1' ? 'GET' : ['GET', 'POST']))
                         return
                     }
 

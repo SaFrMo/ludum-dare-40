@@ -87,6 +87,7 @@
             font-size: 18px;
         }
         .file-controls-wrap {
+            margin-top: 10px;
             text-align: right;
         }
         .file-controls-wrap button {

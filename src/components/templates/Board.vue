@@ -12,14 +12,17 @@
 
             <div class="meta">
                 <h2 class="score">Score: {{ $store.state.score }} / {{ $store.state.totalSubmitted }}</h2>
-                <div class="time">0.{{ $store.state.timerLoop ? $store.state.timerValue.toString().padStart(4, '0') : '00' }} sec / {{ '0.0' + ($store.state.secondsPerRound * 4).toString().padStart(2, '0') }} sec</div>
+                <div class="time">
+                    0.{{ $store.state.timerLoop ? $store.state.timerValue.toString().padStart(4, '0') : '00' }} sec
+                    <span v-if="parseInt($route.params.level) > 2"> / {{ '0.0' + ($store.state.secondsPerRound * 4).toString().padStart(2, '0') }} sec</span>
+                </div>
             </div>
         </section>
 
         <transition-fade>
             <div class="message" v-if="$store.state.message">
                 <div v-html="$store.state.message"></div>
-                <router-link v-if="parseInt($route.params.level) > 2 && $store.state.totalSubmitted > 0" :to="`/level-${ parseInt(this.$route.params.level) + 1 }`">Next Level</router-link>
+                <router-link v-if="$store.state.totalSubmitted > 0" :to="`/level-${ parseInt(this.$route.params.level) + 1 }`">Next Level</router-link>
             </div>
         </transition-fade>
 

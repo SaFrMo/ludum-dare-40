@@ -19,7 +19,7 @@ export default new Vuex.Store({
         timerDoneMarker: false,
         message: false,
         debug: true,
-        secondsPerRound: 20,
+        secondsPerRound: 60,
         requestsReceived: 0
     },
     mutations: {

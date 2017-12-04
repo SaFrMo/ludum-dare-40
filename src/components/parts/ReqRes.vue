@@ -22,7 +22,7 @@
                     </div>
 
                     <div class="content">
-                        <div :class="['request-line', { 'has-border': request.headers.length || request.body }]">
+                        <div :class="['request-line']">
                             <span class="svg-wrap" v-html="getIconFor(request.command)"></span>
                             <span class="code">{{ request.command }}</span>
                             <span class="path">{{ request.path }}</span>

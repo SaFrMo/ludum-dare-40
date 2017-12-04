@@ -49,7 +49,7 @@ export default {
                 allLevelOneFiles.map(file => {
                     store.commit('ADD_FILE', file)
                 })
-                store.commit('ACTIVATE_TIMER')
+                store.commit('START_TIMER')
             }
         }
     ]
