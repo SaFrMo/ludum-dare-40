@@ -59,7 +59,7 @@
                             <h4>Files</h4>
                             <ul class="files">
                                 <li class="file" v-for="(file, i) in staging.files" :key="i">
-                                    <span class="name">{{ file }}</span>
+                                    <span class="name">{{ typeof file == 'string' ? file : file.name }}</span>
                                     <span class="exit" @click="$store.commit('REMOVE_FILE_FROM_STAGING', i)">X</span>
                                 </li>
                             </ul>

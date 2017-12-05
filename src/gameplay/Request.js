@@ -43,10 +43,11 @@ export default class RequestResponse {
             output = this.code.includes('403')
             this.failureReason = `No or incorrect authorization - should be 403 Forbidden.`
         } else if (this.command === 'GET') {
+            const filePath = typeof this.files[0] === 'string' ? this.files[0] : this.files[0].name
             // GET: we should have requested files attached
-            output = `/${this.files[0]}` === this.path
+            output = `/${filePath}` === this.path
             this.failureReason = this.files.length
-                ? `<code>${this.files[0]}</code> does not match requested file <code>${this.path}</code>.`
+                ? `<code>${filePath}</code> does not match requested file <code>${this.path}</code>.`
                 : `<code>${this.path}</code> requested, but no files attached.`
         } else if (this.command === 'POST') {
             // Handle POST validation
